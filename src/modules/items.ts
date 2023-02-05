@@ -7,6 +7,7 @@ const itemList = [
         description: 'Just a white hoodie',
         image: 'https://www.kopikta.lt/images/D/Cruiser_Mid_Heather_Grey_Packshot_Back_Main_0.jpg',
         price: '19.99',
+        category: 'hoodie'
     },
     {
         id: uniqid(),
