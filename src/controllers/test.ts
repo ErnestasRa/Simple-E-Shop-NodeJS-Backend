@@ -1,8 +1,40 @@
 import { itemList } from "../modules/items.js"
+import { ItemSchema } from "../schemas/itemSchema.js"
+import uniqid from 'uniqid'
 
-const testRequest = async (req: RequestInit, res: any) => {
-    res.send(itemList)
-    console.log('ok')
+const getItems = async (req: RequestInit, res: any) => {
+    const allItems = await ItemSchema.find({})
+    res.send(allItems)
 }
 
-export default testRequest
+const getItemsByCategory = async (req, res: any) => {
+    const { category } = req.body
+    if (category === 'All') {
+        const allItems = await ItemSchema.find({})
+        res.send(allItems)
+    } else {
+        const categoryItems = await ItemSchema.find({ category: category })
+        res.send(categoryItems)
+    }
+}
+
+const postItem = async (req: any, res: any) => {
+    const { name, description, image, price, category } = req.body
+    async function newItem() {
+        const item = new ItemSchema({
+            id: uniqid(),
+            name,
+            description,
+            image,
+            price,
+            category,
+        });
+        console.log(item);
+        await item.save()
+    }
+    res.send({ OK: "User created" })
+    newItem()
+}
+
+
+export { postItem, getItems, getItemsByCategory }

@@ -1,5 +1,14 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 const Schema = mongoose.Schema;
+
+interface IItem extends mongoose.Document {
+    id: string,
+    name: string,
+    description: string,
+    image: string,
+    price: string,
+    category: string,
+}
 
 const itemSchema = new Schema({
     id: {
@@ -21,7 +30,14 @@ const itemSchema = new Schema({
     price: {
         type: String,
         required: true
+    },
+    category: {
+        type: String,
+        required: true,
     }
 })
 
-export { itemSchema }
+const ItemSchema = mongoose.model<IItem>('Item', itemSchema)
+
+
+export { ItemSchema }
